@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--white:#faf8f4;--offwhite:#f2ede4;--gold:#c8973a;--gold2:#e8b96a;--dark:#1a1714;--dark2:#252219;--muted:#9a9080;--border:rgba(200,151,58,0.18)}
+:root{--white:#faf8f4;--offwhite:#f2ede4;--gold:#c8973a;--gold2:#e8b96a;--dark:#1a1714;--dark2:#252219;--muted:#9a9080;--border:rgba(200,151,58,0.18);--green:#2d7a4f;--red:#c0392b}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 body{background:var(--white);color:var(--dark);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--offwhite)}::-webkit-scrollbar-thumb{background:var(--gold)}
@@ -79,7 +79,7 @@ nav.scrolled .hamburger span{background:var(--dark)}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;color:var(--dark);line-height:1.2}
 .section-title em{font-style:italic;color:var(--gold)}
 .section-title.light{color:#fff}
-.section-sub{font-size:0.75rem;color:var(--muted);line-height:2;max-width:480px;margin-top:0.8rem;letter-spacing:0.02em}
+.section-sub{font-size:0.75rem;color:var(--muted);line-height:2;max-width:480px;margin-top:0.8rem}
 .divider{width:50px;height:2px;background:var(--gold);margin:1.2rem 0}
 .divider.center{margin:1.2rem auto}
 .section-center{text-align:center}.section-center .section-sub{margin:0.8rem auto 0}
@@ -158,6 +158,12 @@ nav.scrolled .hamburger span{background:var(--dark)}
 .t-avatar{width:42px;height:42px;border-radius:50%;background:rgba(200,151,58,0.15);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;color:var(--gold);font-size:1rem;flex-shrink:0}
 .t-name{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:#fff;margin-bottom:0.2rem}
 .t-loc{font-size:0.58rem;color:var(--muted)}
+/* MAP */
+.map-section{background:var(--offwhite)}
+.map-wrap{margin-top:2rem;border:1px solid var(--border);overflow:hidden}
+.map-wrap iframe{width:100%;height:450px;border:none;display:block}
+@media(max-width:768px){.map-wrap iframe{height:300px}}
+/* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:400;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .overlay.open{opacity:1;pointer-events:all}
 .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-62%);width:96%;max-width:620px;background:#fff;z-index:401;opacity:0;pointer-events:none;transition:all 0.35s;max-height:92vh;overflow-y:auto}
@@ -196,6 +202,7 @@ nav.scrolled .hamburger span{background:var(--dark)}
 .s-code{background:var(--offwhite);border:1px solid var(--border);padding:1rem;margin-bottom:1.5rem}
 .s-code-label{font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem}
 .s-code-value{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);letter-spacing:0.2em}
+/* LIGHTBOX */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:500;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
 .lightbox.open{display:flex}
 .lightbox-img{max-width:90vw;max-height:80vh;object-fit:contain;width:auto;height:auto}
@@ -205,6 +212,36 @@ nav.scrolled .hamburger span{background:var(--dark)}
 .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.2rem;transition:all 0.3s}
 .lightbox-nav:hover{border-color:var(--gold);color:var(--gold)}
 .lightbox-prev{left:1.5rem}.lightbox-next{right:1.5rem}
+/* ADMIN PANEL */
+.admin-btn{position:fixed;bottom:2rem;left:2rem;background:var(--dark);color:var(--gold);border:1px solid rgba(200,151,58,0.3);padding:0.5rem 1rem;font-family:'Jost',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;z-index:99}
+.admin-btn:hover{background:var(--gold);color:#fff}
+.admin-panel{position:fixed;inset:0;background:var(--dark2);z-index:600;overflow-y:auto;display:none}
+.admin-panel.open{display:block}
+.admin-header{background:var(--dark);padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:1}
+.admin-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff}
+.admin-close{background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;letter-spacing:0.2em;text-transform:uppercase;font-family:'Jost',sans-serif;font-size:0.6rem;transition:color 0.3s}
+.admin-close:hover{color:#fff}
+.admin-body{padding:2rem;max-width:1200px;margin:0 auto}
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+@media(max-width:768px){.admin-stats{grid-template-columns:repeat(2,1fr)}}
+.admin-stat{background:var(--dark);border:1px solid rgba(200,151,58,0.15);padding:1.2rem;text-align:center}
+.admin-stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);line-height:1}
+.admin-stat-label{font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem}
+.admin-table-wrap{overflow-x:auto}
+.admin-table{width:100%;border-collapse:collapse;font-size:0.72rem}
+.admin-table th{background:var(--dark);color:var(--gold);padding:0.8rem 1rem;text-align:left;font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:400;white-space:nowrap}
+.admin-table td{padding:0.8rem 1rem;border-bottom:1px solid rgba(200,151,58,0.06);color:rgba(255,255,255,0.7);vertical-align:middle}
+.admin-table tr:hover td{background:rgba(200,151,58,0.04)}
+.status-badge{display:inline-block;padding:3px 10px;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:1px}
+.status-pending{background:rgba(200,151,58,0.15);color:var(--gold)}
+.status-confirmed{background:rgba(45,122,79,0.15);color:#4caf80}
+.status-cancelled{background:rgba(192,57,43,0.15);color:#e57373}
+.status-select{background:var(--dark);border:1px solid rgba(200,151,58,0.2);color:#fff;padding:3px 8px;font-family:'Jost',sans-serif;font-size:0.6rem;cursor:pointer;outline:none}
+.admin-search{background:var(--dark);border:1px solid rgba(200,151,58,0.2);padding:0.6rem 1rem;font-family:'Jost',sans-serif;font-size:0.72rem;color:#fff;outline:none;width:100%;max-width:300px;margin-bottom:1.5rem;transition:border 0.3s}
+.admin-search:focus{border-color:var(--gold)}
+.admin-search::placeholder{color:var(--muted)}
+.admin-empty{text-align:center;padding:3rem;color:var(--muted);font-size:0.72rem;letter-spacing:0.2em}
+/* CONTACT */
 .contact-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start}
 @media(max-width:768px){.contact-grid{grid-template-columns:1fr;gap:2.5rem}}
 .contact-info-item{display:flex;gap:1rem;margin-bottom:1.8rem;align-items:flex-start}
@@ -235,6 +272,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
 </style>
 </head>
 <body>
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
   <a href="#about" onclick="closeMobileMenu()">About</a>
@@ -244,6 +282,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
   <a href="#contact" onclick="closeMobileMenu()">Contact</a>
   <button class="btn-primary" onclick="closeMobileMenu();openBooking()" style="margin-top:1rem">Book Now</button>
 </div>
+<!-- RESERVATION MODAL -->
 <div class="overlay" id="resOverlay" onclick="closeModal()"></div>
 <div class="modal" id="resModal">
   <div class="modal-head"><div class="modal-title">Reserve Your Stay</div><button class="modal-close" onclick="closeModal()">✕</button></div>
@@ -277,17 +316,19 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
       <div class="srow"><span class="slabel">Nights</span><span class="svalue" id="sNights">—</span></div>
       <div class="srow stotal"><span class="slabel">Total Estimate</span><span class="svalue" id="sTotal">—</span></div>
     </div>
-    <button class="confirm-btn" onclick="confirmReservation()">Confirm Reservation →</button>
+    <button class="confirm-btn" id="confirmBtn" onclick="confirmReservation()">Confirm Reservation →</button>
   </div>
 </div>
+<!-- SUCCESS MODAL -->
 <div class="overlay" id="sucOverlay" onclick="closeSuccess()" style="z-index:401"></div>
 <div class="success-modal" id="sucModal">
   <div class="s-icon">✨</div>
   <div class="s-title">Confirmed!</div>
-  <div class="s-text">Thank you for choosing Velour Grand Hotel. Your reservation is confirmed and saved.</div>
+  <div class="s-text">Thank you for choosing Velour Grand Hotel. Your reservation is confirmed and saved in our system.</div>
   <div class="s-code"><div class="s-code-label">Confirmation Number</div><div class="s-code-value" id="sucCode">—</div></div>
   <button class="confirm-btn" onclick="closeSuccess()">Close</button>
 </div>
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation();changeLightbox(-1)">‹</button>
@@ -295,17 +336,49 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
   <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation();changeLightbox(1)">›</button>
   <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <div class="admin-title">Admin Panel — Reservations</div>
+    <button class="admin-close" onclick="closeAdmin()">← Back to site</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-stats">
+      <div class="admin-stat"><div class="admin-stat-num" id="aTotalRes">0</div><div class="admin-stat-label">Total Reservations</div></div>
+      <div class="admin-stat"><div class="admin-stat-num" id="aPending">0</div><div class="admin-stat-label">Pending</div></div>
+      <div class="admin-stat"><div class="admin-stat-num" id="aConfirmed">0</div><div class="admin-stat-label">Confirmed</div></div>
+      <div class="admin-stat" style="color:var(--gold)"><div class="admin-stat-num" id="aRevenue">$0</div><div class="admin-stat-label">Total Revenue</div></div>
+    </div>
+    <input class="admin-search" id="adminSearch" placeholder="Search by name, email or code..." oninput="filterReservations(this.value)">
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Code</th><th>Guest</th><th>Email</th><th>Room</th>
+            <th>Check-in</th><th>Check-out</th><th>Nights</th>
+            <th>Total</th><th>Status</th><th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<button class="admin-btn" onclick="openAdmin()">⚙ Admin</button>
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <div class="toast" id="toast"></div>
+<!-- NAVBAR -->
 <nav id="navbar">
   <a href="#" class="nav-logo">Velour Grand</a>
   <div class="nav-links">
     <a href="#about">About</a><a href="#rooms">Rooms</a><a href="#gallery">Gallery</a>
-    <a href="#services">Services</a><a href="#testimonials">Reviews</a><a href="#contact">Contact</a>
+    <a href="#services">Services</a><a href="#testimonials">Reviews</a>
+    <a href="#location">Location</a><a href="#contact">Contact</a>
     <button class="nav-book" onclick="openBooking()">Book Now</button>
   </div>
   <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
 </nav>
+<!-- HERO -->
 <section class="hero">
   <div class="hero-img"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=80" alt="Velour Grand Hotel" loading="eager"></div>
   <div class="hero-overlay"></div>
@@ -321,6 +394,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
   <div class="hero-scroll"><div class="hero-scroll-line"></div><div class="hero-scroll-text">Scroll</div></div>
   <div class="hero-award"><div class="hero-award-num">5★</div><div class="hero-award-label">Forbes Rating</div></div>
 </section>
+<!-- BOOKING BAR -->
 <div class="booking-bar">
   <div class="booking-field"><label class="booking-label">Check-in</label><input class="booking-input" type="date" id="barIn"></div>
   <div class="booking-field"><label class="booking-label">Check-out</label><input class="booking-input" type="date" id="barOut"></div>
@@ -328,12 +402,14 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
   <div class="booking-field"><label class="booking-label">Room</label><select class="booking-select" id="barRoom"><option>Any Room</option><option>Deluxe Room</option><option>Junior Suite</option><option>Executive Suite</option><option>Presidential Suite</option></select></div>
   <button class="booking-submit" onclick="bookFromBar()">Check Availability →</button>
 </div>
+<!-- STATS -->
 <div class="stats-strip">
   <div class="stat-item reveal"><div class="stat-num">100+</div><div class="stat-label">Years of Excellence</div></div>
   <div class="stat-item reveal"><div class="stat-num">48</div><div class="stat-label">Luxury Suites</div></div>
   <div class="stat-item reveal"><div class="stat-num">3</div><div class="stat-label">Michelin Restaurants</div></div>
   <div class="stat-item reveal"><div class="stat-num">98%</div><div class="stat-label">Guest Satisfaction</div></div>
 </div>
+<!-- ABOUT -->
 <section class="section" id="about">
   <div class="container">
     <div class="about-grid">
@@ -356,6 +432,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
     </div>
   </div>
 </section>
+<!-- ROOMS -->
 <section class="section bg-offwhite" id="rooms">
   <div class="container">
     <div class="section-center reveal">
@@ -368,7 +445,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
       <div class="room-card featured reveal">
         <div class="room-img-wrap"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80" alt="Presidential Suite"><div class="room-badge">Presidential Suite</div></div>
         <div class="room-info">
-          <div><div class="room-name">Presidential Suite</div><div class="room-desc">The pinnacle of luxury — 3 bedrooms, private dining room, personal chef on request, rooftop terrace, and a dedicated butler. An address above all others.</div><div class="room-amenities"><span class="amenity">🛏 3 Bedrooms</span><span class="amenity">👨‍🍳 Private Chef</span><span class="amenity">🏙 Rooftop</span><span class="amenity">🚗 Limo</span><span class="amenity">🛁 Jacuzzi</span></div></div>
+          <div><div class="room-name">Presidential Suite</div><div class="room-desc">The pinnacle of luxury — 3 bedrooms, private dining room, personal chef on request, rooftop terrace, and a dedicated butler.</div><div class="room-amenities"><span class="amenity">🛏 3 Bedrooms</span><span class="amenity">👨‍🍳 Chef</span><span class="amenity">🏙 Rooftop</span><span class="amenity">🚗 Limo</span><span class="amenity">🛁 Jacuzzi</span></div></div>
           <div class="room-footer"><div><span class="room-price-num">$850</span><span class="room-price-per"> / night</span></div><button class="btn-dark" onclick="openBookingRoom('Presidential Suite',850)">Reserve Now</button></div>
         </div>
       </div>
@@ -396,6 +473,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
     </div>
   </div>
 </section>
+<!-- GALLERY -->
 <section class="section" id="gallery">
   <div class="container">
     <div class="section-center reveal"><div class="section-label">Visual Tour</div><h2 class="section-title">Hotel <em>Gallery</em></h2><div class="divider center"></div></div>
@@ -408,29 +486,46 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
     </div>
   </div>
 </section>
+<!-- SERVICES -->
 <section class="section bg-offwhite" id="services">
   <div class="container">
     <div class="section-center reveal"><div class="section-label">Hotel Amenities</div><h2 class="section-title">World-Class <em>Services</em></h2><div class="divider center"></div></div>
     <div class="services-grid">
-      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine Dining"></div><div class="service-body"><div class="service-icon">🍽️</div><div class="service-name">Fine Dining</div><div class="service-desc">Three award-winning restaurants offering global cuisine crafted by Michelin-starred chefs using only the finest seasonal ingredients.</div></div></div>
-      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80" alt="Luxury Spa"></div><div class="service-body"><div class="service-icon">💆</div><div class="service-name">Luxury Spa</div><div class="service-desc">Rejuvenate body and mind with our exclusive treatments, hydrotherapy pools, and world-renowned therapists.</div></div></div>
-      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&q=80" alt="Infinity Pool"></div><div class="service-body"><div class="service-icon">🏊</div><div class="service-name">Infinity Pool</div><div class="service-desc">Rooftop infinity pool with breathtaking panoramic views of the city skyline, open year-round.</div></div></div>
-      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Fitness"></div><div class="service-body"><div class="service-icon">🏋️</div><div class="service-name">Fitness Center</div><div class="service-desc">State-of-the-art gym open 24/7 with personal trainers, yoga studio, and recovery facilities.</div></div></div>
-      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80" alt="Events"></div><div class="service-body"><div class="service-icon">🎭</div><div class="service-name">Events & Banquets</div><div class="service-desc">Elegant event spaces for weddings, galas, and corporate functions accommodating up to 500 guests.</div></div></div>
-      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Concierge"></div><div class="service-body"><div class="service-icon">🗝️</div><div class="service-name">Concierge</div><div class="service-desc">Personal concierge, private transfers, curated experiences, and anything you need around the clock.</div></div></div>
+      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine Dining"></div><div class="service-body"><div class="service-icon">🍽️</div><div class="service-name">Fine Dining</div><div class="service-desc">Three award-winning restaurants offering global cuisine crafted by Michelin-starred chefs.</div></div></div>
+      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80" alt="Luxury Spa"></div><div class="service-body"><div class="service-icon">💆</div><div class="service-name">Luxury Spa</div><div class="service-desc">Rejuvenate body and mind with exclusive treatments and world-renowned therapists.</div></div></div>
+      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&q=80" alt="Infinity Pool"></div><div class="service-body"><div class="service-icon">🏊</div><div class="service-name">Infinity Pool</div><div class="service-desc">Rooftop infinity pool with breathtaking panoramic views of the city skyline.</div></div></div>
+      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Fitness"></div><div class="service-body"><div class="service-icon">🏋️</div><div class="service-name">Fitness Center</div><div class="service-desc">State-of-the-art gym open 24/7 with personal trainers and recovery facilities.</div></div></div>
+      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80" alt="Events"></div><div class="service-body"><div class="service-icon">🎭</div><div class="service-name">Events & Banquets</div><div class="service-desc">Elegant spaces for weddings, galas, and corporate functions up to 500 guests.</div></div></div>
+      <div class="service-card reveal"><div class="service-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Concierge"></div><div class="service-body"><div class="service-icon">🗝️</div><div class="service-name">Concierge</div><div class="service-desc">Personal concierge, private transfers, and curated experiences around the clock.</div></div></div>
     </div>
   </div>
 </section>
+<!-- TESTIMONIALS -->
 <section class="section bg-dark" id="testimonials">
   <div class="container">
     <div class="section-center reveal"><div class="section-label">Guest Reviews</div><h2 class="section-title light">What Our <em>Guests Say</em></h2><div class="divider center"></div></div>
     <div class="testimonials-grid">
-      <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"An absolutely unforgettable experience. The Presidential Suite exceeded every expectation. The staff anticipates your every need before you realize it."</div><div class="testimonial-author"><div class="t-avatar">J</div><div><div class="t-name">James Whitfield</div><div class="t-loc">New York, USA</div></div></div></div>
-      <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"Velour Grand is in a league of its own. The attention to detail in every corner is remarkable. The spa experience was truly transformative."</div><div class="testimonial-author"><div class="t-avatar">S</div><div><div class="t-name">Sophie Laurent</div><div class="t-loc">Paris, France</div></div></div></div>
-      <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"We celebrated our anniversary here and it was pure magic. Flowers, champagne, a private dinner — truly exceptional service at every turn."</div><div class="testimonial-author"><div class="t-avatar">M</div><div><div class="t-name">Marco & Elena Rossi</div><div class="t-loc">Milan, Italy</div></div></div></div>
+      <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"An absolutely unforgettable experience. The Presidential Suite exceeded every expectation. The staff anticipates your every need."</div><div class="testimonial-author"><div class="t-avatar">J</div><div><div class="t-name">James Whitfield</div><div class="t-loc">New York, USA</div></div></div></div>
+      <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"Velour Grand is in a league of its own. The attention to detail in every corner is remarkable. The spa was truly transformative."</div><div class="testimonial-author"><div class="t-avatar">S</div><div><div class="t-name">Sophie Laurent</div><div class="t-loc">Paris, France</div></div></div></div>
+      <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"We celebrated our anniversary here and it was pure magic. Flowers, champagne, a private dinner — truly exceptional service."</div><div class="testimonial-author"><div class="t-avatar">M</div><div><div class="t-name">Marco & Elena Rossi</div><div class="t-loc">Milan, Italy</div></div></div></div>
     </div>
   </div>
 </section>
+<!-- LOCATION / MAP -->
+<section class="section map-section" id="location">
+  <div class="container">
+    <div class="section-center reveal">
+      <div class="section-label">Find Us</div>
+      <h2 class="section-title">Our <em>Location</em></h2>
+      <div class="divider center"></div>
+      <p class="section-sub">Located in the heart of the city, steps away from world-class shopping, dining, and cultural attractions.</p>
+    </div>
+    <div class="map-wrap reveal">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215573291865!2d-73.98823492396382!3d40.74844097138946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+<!-- CONTACT -->
 <section class="section bg-offwhite" id="contact">
   <div class="container">
     <div class="contact-grid">
@@ -451,14 +546,15 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
           <input class="cinput" type="text" placeholder="First Name" id="ctFirst">
           <input class="cinput" type="text" placeholder="Last Name" id="ctLast">
         </div>
-        <input class="cinput" type="email" placeholder="Email Address" id="ctEmail">
-        <input class="cinput" type="text" placeholder="Subject" id="ctSubject">
-        <textarea class="cinput" placeholder="Your message..." id="ctMsg"></textarea>
-        <button style="background:var(--dark);color:#fff;border:none;padding:0.9rem 2.5rem;font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;cursor:pointer;transition:background 0.3s;align-self:flex-start" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--dark)'" onclick="sendContact()">Send Message →</button>
+        <input class="cinput" type="email" placeholder="Email Address" id="ctEmail" style="margin-top:1rem">
+        <input class="cinput" type="text" placeholder="Subject" id="ctSubject" style="margin-top:1rem">
+        <textarea class="cinput" placeholder="Your message..." id="ctMsg" style="margin-top:1rem"></textarea>
+        <button style="margin-top:1rem;background:var(--dark);color:#fff;border:none;padding:0.9rem 2.5rem;font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;cursor:pointer;transition:background 0.3s" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--dark)'" onclick="sendContact()">Send Message →</button>
       </div>
     </div>
   </div>
 </section>
+<!-- FOOTER -->
 <footer>
   <div class="footer-top">
     <div><div class="footer-logo">Velour Grand</div><p class="footer-desc">A century of luxury hospitality. Where every stay becomes an unforgettable memory crafted with passion and precision.</p></div>
@@ -469,40 +565,69 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
   <div class="footer-bottom"><div class="footer-copy">© 2025 Velour Grand Hotel · All Rights Reserved</div><div class="footer-copy">Crafted with passion</div></div>
 </footer>
 <script>
-const nav=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>80);document.getElementById('backTop').classList.toggle('show',window.scrollY>600);});
+// ── SUPABASE ──────────────────────────────────────────────
+const SB_URL='https://luzxsqfzqkchvjzofdsq.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1enhzcWZ6cWtjaHZqem9mZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODMwOTMsImV4cCI6MjA4OTI1OTA5M30.f0iYd7yAmq8iMT7mXJa4EAaWyQiTuo5-RnuUHeMBIPA';
+const SBH={'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json'};
+async function sbPost(table,body){const r=await fetch(`${SB_URL}/rest/v1/${table}`,{method:'POST',headers:{...SBH,'Prefer':'return=representation'},body:JSON.stringify(body)});return r.json();}
+async function sbGet(table,query=''){const r=await fetch(`${SB_URL}/rest/v1/${table}?${query}`,{headers:SBH});return r.json();}
+async function sbPatch(table,query,body){const r=await fetch(`${SB_URL}/rest/v1/${table}?${query}`,{method:'PATCH',headers:SBH,body:JSON.stringify(body)});return r.json();}
+
+// ── NAV ───────────────────────────────────────────────────
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>80);document.getElementById('backTop').classList.toggle('show',window.scrollY>600);});
 function openMobileMenu(){document.getElementById('mobileMenu').classList.add('open');}
 function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+
+// ── TOAST ─────────────────────────────────────────────────
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
+
+// ── DATES ─────────────────────────────────────────────────
 const today=new Date().toISOString().split('T')[0];
 const tmrw=new Date(Date.now()+86400000).toISOString().split('T')[0];
-document.getElementById('barIn').value=today;document.getElementById('barOut').value=tmrw;
-document.getElementById('fCheckin').min=today;document.getElementById('fCheckout').min=tmrw;
+document.getElementById('barIn').value=today;
+document.getElementById('barOut').value=tmrw;
+document.getElementById('fCheckin').min=today;
+document.getElementById('fCheckout').min=tmrw;
+
+// ── BOOKING BAR ───────────────────────────────────────────
 function bookFromBar(){
   const ci=document.getElementById('barIn').value,co=document.getElementById('barOut').value;
   if(!ci||!co){showToast('Please select dates');return;}
-  openBooking();document.getElementById('fCheckin').value=ci;document.getElementById('fCheckout').value=co;
+  openBooking();
+  document.getElementById('fCheckin').value=ci;
+  document.getElementById('fCheckout').value=co;
   const r=document.getElementById('barRoom').value;
   if(r!=='Any Room'){const sel=document.getElementById('fRoom');for(let o of sel.options){if(o.value.startsWith(r)){sel.value=o.value;break;}}}
   calcSummary();
 }
+
+// ── MODAL ─────────────────────────────────────────────────
 function openBooking(){document.getElementById('resOverlay').classList.add('open');document.getElementById('resModal').classList.add('open');}
 function openBookingRoom(name,price){
-  openBooking();const sel=document.getElementById('fRoom');
+  openBooking();
+  const sel=document.getElementById('fRoom');
   for(let o of sel.options){if(o.value.startsWith(name)){sel.value=o.value;break;}}
-  document.getElementById('srpName').textContent=name;document.getElementById('srpPrice').textContent=`$${price} per night`;
+  document.getElementById('srpName').textContent=name;
+  document.getElementById('srpPrice').textContent=`$${price} per night`;
   calcSummary();
 }
 function closeModal(){document.getElementById('resOverlay').classList.remove('open');document.getElementById('resModal').classList.remove('open');}
+
 function calcSummary(){
-  const rv=document.getElementById('fRoom').value,ci=document.getElementById('fCheckin').value,co=document.getElementById('fCheckout').value;
+  const rv=document.getElementById('fRoom').value;
+  const ci=document.getElementById('fCheckin').value;
+  const co=document.getElementById('fCheckout').value;
   const box=document.getElementById('summaryBox');
   if(!rv||!ci||!co){box.classList.remove('show');return;}
   const[rn,ps]=rv.split('|'),price=parseInt(ps);
   const nights=Math.max(1,Math.round((new Date(co)-new Date(ci))/86400000));
-  document.getElementById('srpName').textContent=rn;document.getElementById('srpPrice').textContent=`$${price} per night`;
+  document.getElementById('srpName').textContent=rn;
+  document.getElementById('srpPrice').textContent=`$${price} per night`;
   document.getElementById('sRoom').textContent=rn;
   document.getElementById('sCheckin').textContent=new Date(ci).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
   document.getElementById('sCheckout').textContent=new Date(co).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
@@ -510,27 +635,131 @@ function calcSummary(){
   document.getElementById('sTotal').textContent=`$${(price*nights).toLocaleString()}`;
   box.classList.add('show');
 }
-function confirmReservation(){
-  const f=document.getElementById('fFirst').value.trim(),l=document.getElementById('fLast').value.trim();
-  const e=document.getElementById('fEmail').value.trim(),ci=document.getElementById('fCheckin').value;
-  const co=document.getElementById('fCheckout').value,r=document.getElementById('fRoom').value;
-  if(!f||!l||!e||!ci||!co||!r){showToast('Please fill all required fields');return;}
+
+async function confirmReservation(){
+  const f=document.getElementById('fFirst').value.trim();
+  const l=document.getElementById('fLast').value.trim();
+  const e=document.getElementById('fEmail').value.trim();
+  const ci=document.getElementById('fCheckin').value;
+  const co=document.getElementById('fCheckout').value;
+  const rv=document.getElementById('fRoom').value;
+  const guests=document.getElementById('fGuests').value;
+  const special=document.getElementById('fSpecial').value.trim();
+  if(!f||!l||!e||!ci||!co||!rv){showToast('Please fill all required fields');return;}
+  const[rn,ps]=rv.split('|'),price=parseInt(ps);
+  const nights=Math.max(1,Math.round((new Date(co)-new Date(ci))/86400000));
+  const total=price*nights;
   const code='VGH'+Date.now().toString().slice(-6);
-  document.getElementById('sucCode').textContent=code;
-  closeModal();document.getElementById('sucOverlay').classList.add('open');document.getElementById('sucModal').classList.add('open');
-  const res=JSON.parse(localStorage.getItem('vg_res')||'[]');
-  res.push({code,name:`${f} ${l}`,email:e,room:r,ci,co,ts:new Date().toISOString()});
-  localStorage.setItem('vg_res',JSON.stringify(res));
+  const btn=document.getElementById('confirmBtn');
+  btn.textContent='Saving...';btn.disabled=true;
+  try{
+    await sbPost('reservations',{
+      code,first_name:f,last_name:l,email:e,
+      phone:document.getElementById('fPhone').value.trim(),
+      room:rn,checkin:ci,checkout:co,
+      nights,total,guests,special,status:'pending'
+    });
+    document.getElementById('sucCode').textContent=code;
+    closeModal();
+    document.getElementById('sucOverlay').classList.add('open');
+    document.getElementById('sucModal').classList.add('open');
+  }catch(err){showToast('Error saving reservation. Try again.');}
+  btn.textContent='Confirm Reservation →';btn.disabled=false;
 }
+
 function closeSuccess(){document.getElementById('sucOverlay').classList.remove('open');document.getElementById('sucModal').classList.remove('open');}
-const galleryImgs=['https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1400&q=85','https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1400&q=85','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=85','https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=85','https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&q=85'];
+
+// ── LIGHTBOX ──────────────────────────────────────────────
+const galleryImgs=[
+  'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1400&q=85',
+  'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1400&q=85',
+  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=85',
+  'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=85',
+  'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&q=85',
+];
 let currentImg=0;
 function openLightbox(idx){currentImg=idx;document.getElementById('lightboxImg').src=galleryImgs[idx];document.getElementById('lightboxCounter').textContent=`${idx+1} / ${galleryImgs.length}`;document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
-function closeLightbox(e){if(!e||e.target===document.getElementById('lightbox')||e.currentTarget===document.querySelector('.lightbox-close')){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}}
+function closeLightbox(e){if(!e||e.target===document.getElementById('lightbox')){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}}
 function changeLightbox(dir){currentImg=(currentImg+dir+galleryImgs.length)%galleryImgs.length;document.getElementById('lightboxImg').src=galleryImgs[currentImg];document.getElementById('lightboxCounter').textContent=`${currentImg+1} / ${galleryImgs.length}`;}
-document.addEventListener('keydown',e=>{if(document.getElementById('lightbox').classList.contains('open')){if(e.key==='ArrowRight')changeLightbox(1);if(e.key==='ArrowLeft')changeLightbox(-1);if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open');}});
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(e.key==='ArrowRight')changeLightbox(1);
+    if(e.key==='ArrowLeft')changeLightbox(-1);
+    if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open');
+  }
+});
+
+// ── ADMIN PANEL ───────────────────────────────────────────
+let allReservations=[];
+async function openAdmin(){
+  document.getElementById('adminPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  await loadReservations();
+}
+function closeAdmin(){document.getElementById('adminPanel').classList.remove('open');document.body.style.overflow='';}
+async function loadReservations(){
+  const tbody=document.getElementById('adminTableBody');
+  tbody.innerHTML='<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted)">Loading...</td></tr>';
+  try{
+    allReservations=await sbGet('reservations','order=created_at.desc');
+    renderAdminTable(allReservations);
+    updateAdminStats(allReservations);
+  }catch(err){tbody.innerHTML='<tr><td colspan="10" class="admin-empty">Error loading reservations</td></tr>';}
+}
+function updateAdminStats(data){
+  document.getElementById('aTotalRes').textContent=data.length;
+  document.getElementById('aPending').textContent=data.filter(r=>r.status==='pending').length;
+  document.getElementById('aConfirmed').textContent=data.filter(r=>r.status==='confirmed').length;
+  const revenue=data.filter(r=>r.status!=='cancelled').reduce((s,r)=>s+(r.total||0),0);
+  document.getElementById('aRevenue').textContent=`$${revenue.toLocaleString()}`;
+}
+function renderAdminTable(data){
+  const tbody=document.getElementById('adminTableBody');
+  if(data.length===0){tbody.innerHTML='<tr><td colspan="10" class="admin-empty">No reservations yet</td></tr>';return;}
+  tbody.innerHTML=data.map(r=>`
+    <tr>
+      <td style="color:var(--gold);font-family:'Playfair Display',serif">${r.code||'—'}</td>
+      <td>${r.first_name||''} ${r.last_name||''}</td>
+      <td style="font-size:0.65rem">${r.email||'—'}</td>
+      <td>${r.room||'—'}</td>
+      <td>${r.checkin||'—'}</td>
+      <td>${r.checkout||'—'}</td>
+      <td style="text-align:center">${r.nights||'—'}</td>
+      <td style="color:var(--gold)">$${(r.total||0).toLocaleString()}</td>
+      <td>
+        <select class="status-select" onchange="changeStatus(${r.id},this.value)">
+          <option value="pending" ${r.status==='pending'?'selected':''}>Pending</option>
+          <option value="confirmed" ${r.status==='confirmed'?'selected':''}>Confirmed</option>
+          <option value="cancelled" ${r.status==='cancelled'?'selected':''}>Cancelled</option>
+        </select>
+      </td>
+      <td style="font-size:0.62rem;color:var(--muted)">${r.created_at?new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}</td>
+    </tr>
+  `).join('');
+}
+async function changeStatus(id,status){
+  await sbPatch('reservations',`id=eq.${id}`,{status});
+  await loadReservations();
+  showToast(`Status updated to ${status} ✓`);
+}
+function filterReservations(query){
+  if(!query.trim()){renderAdminTable(allReservations);return;}
+  const q=query.toLowerCase();
+  const filtered=allReservations.filter(r=>
+    (r.first_name||'').toLowerCase().includes(q)||
+    (r.last_name||'').toLowerCase().includes(q)||
+    (r.email||'').toLowerCase().includes(q)||
+    (r.code||'').toLowerCase().includes(q)||
+    (r.room||'').toLowerCase().includes(q)
+  );
+  renderAdminTable(filtered);
+}
+
+// ── CONTACT ───────────────────────────────────────────────
 function sendContact(){
-  const f=document.getElementById('ctFirst').value.trim(),e=document.getElementById('ctEmail').value.trim(),m=document.getElementById('ctMsg').value.trim();
+  const f=document.getElementById('ctFirst').value.trim();
+  const e=document.getElementById('ctEmail').value.trim();
+  const m=document.getElementById('ctMsg').value.trim();
   if(!f||!e||!m){showToast('Please fill all required fields');return;}
   ['ctFirst','ctLast','ctEmail','ctSubject','ctMsg'].forEach(id=>document.getElementById(id).value='');
   showToast("Message sent! We'll respond within 24 hours ✓");
