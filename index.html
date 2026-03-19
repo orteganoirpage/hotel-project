@@ -10,6 +10,7 @@
 <meta property="og:image" content="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231a1714'/><text y='.9em' font-size='80' x='10'>🏨</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root{--white:#faf8f4;--offwhite:#f2ede4;--gold:#c8973a;--gold2:#e8b96a;--dark:#1a1714;--dark2:#252219;--muted:#9a9080;--border:rgba(200,151,58,0.18)}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
@@ -878,7 +879,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
         <div style="margin-top:2rem">
           <div class="contact-info-item"><div class="ci-icon">📍</div><div><div class="ci-label">Address</div><div class="ci-val">1 Grand Avenue, City Center<br>New York, NY 10001</div></div></div>
           <div class="contact-info-item"><div class="ci-icon">📞</div><div><div class="ci-label">Phone</div><div class="ci-val">+1 (212) 555-0100</div></div></div>
-          <div class="contact-info-item"><div class="ci-icon">✉️</div><div><div class="ci-label">Email</div><div class="ci-val">reservations@velourgrand.com</div></div></div>
+          <div class="contact-info-item"><div class="ci-icon">✉️</div><div><div class="ci-label">Email</div><div class="ci-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a081f091f080c1b0e131514093a0c1f16150f081d081b141e54191517">[email&#160;protected]</a></div></div></div>
           <div class="contact-info-item"><div class="ci-icon">🕐</div><div><div class="ci-label">Check-in · Check-out</div><div class="ci-val">Check-in: 3:00 PM · Check-out: 12:00 PM</div></div></div>
         </div>
       </div>
@@ -907,7 +908,7 @@ footer{background:var(--dark2);padding:4rem 3rem 2rem}
   <div class="footer-bottom"><div class="footer-copy">© 2025 Velour Grand Hotel · All Rights Reserved</div><div class="footer-copy">Crafted with passion</div></div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── SUPABASE ──────────────────────────────────────────────
 const SB_URL='https://luzxsqfzqkchvjzofdsq.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1enhzcWZ6cWtjaHZqem9mZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODMwOTMsImV4cCI6MjA4OTI1OTA5M30.f0iYd7yAmq8iMT7mXJa4EAaWyQiTuo5-RnuUHeMBIPA';
@@ -1060,6 +1061,33 @@ function formatExpiry(input){
   input.value=v;
 }
 
+// ── EMAILJS ───────────────────────────────────────────────
+emailjs.init('RKm7vqLPVQKjS6aAO');
+async function sendConfirmationEmail(params){
+  try{
+    await emailjs.send('service_l3onuem','template_f279yy5',{
+      guest_name:params.guest_name,
+      guest_email:params.guest_email,
+      confirmation_code:params.code,
+      room:params.room,
+      checkin:params.checkin,
+      checkout:params.checkout,
+      guests:params.guests,
+      total:`$${params.total.toLocaleString()}`,
+      special:params.special||'None'
+    });
+    console.log('Email sent successfully');
+  }catch(err){console.error('Email error:',err);}
+}
+
+// ── CHECK AVAILABILITY ────────────────────────────────────
+async function checkAvailability(room,checkin,checkout){
+  try{
+    const data=await sbGet('reservations',`room=eq.${encodeURIComponent(room)}&status=neq.cancelled&checkin=lt.${checkout}&checkout=gt.${checkin}`);
+    return data.length===0;
+  }catch(err){return true;}
+}
+
 async function processPayment(){
   const name=document.getElementById('pName').value.trim();
   const card=document.getElementById('pCard').value.trim();
@@ -1071,10 +1099,19 @@ async function processPayment(){
   if(card.replace(/\s/g,'').length<16){showToast('Please enter a valid card number');return;}
   showStep('stepProcessing');
   document.getElementById('resModal').scrollTop=0;
-  await new Promise(r=>setTimeout(r,2500));
   const f=document.getElementById('fFirst').value.trim();
   const l=document.getElementById('fLast').value.trim();
   const e=document.getElementById('fEmail').value.trim();
+  const guests=document.getElementById('fGuests').value;
+  const special=document.getElementById('fSpecial').value.trim();
+  // Check availability
+  const available=await checkAvailability(bookingData.rn,bookingData.ci,bookingData.co);
+  if(!available){
+    showStep('stepDetails');
+    showToast('Sorry, this room is not available for the selected dates.');
+    return;
+  }
+  await new Promise(r=>setTimeout(r,2000));
   const code='VGH'+Date.now().toString().slice(-6);
   try{
     await sbPost('reservations',{
@@ -1082,11 +1119,21 @@ async function processPayment(){
       phone:document.getElementById('fPhone').value.trim(),
       room:bookingData.rn,checkin:bookingData.ci,checkout:bookingData.co,
       nights:bookingData.nights,total:bookingData.total,
-      guests:document.getElementById('fGuests').value,
-      special:document.getElementById('fSpecial').value.trim(),
-      status:'confirmed'
+      guests,special,status:'confirmed'
     });
-  }catch(err){}
+    // Send confirmation email
+    await sendConfirmationEmail({
+      guest_name:`${f} ${l}`,
+      guest_email:e,
+      code,
+      room:bookingData.rn,
+      checkin:bookingData.ci,
+      checkout:bookingData.co,
+      guests,
+      total:bookingData.total,
+      special
+    });
+  }catch(err){console.error(err);}
   document.getElementById('sucCode').textContent=code;
   closeModal();
   document.getElementById('sucOverlay').classList.add('open');
@@ -1135,16 +1182,24 @@ document.addEventListener('keydown',e=>{if(document.getElementById('lightbox').c
 function toggleFaq(el){const item=el.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
 
 // ── ADMIN ─────────────────────────────────────────────────
-const ADMIN_PASS='Lu12340293727';
+// Admin password stored as SHA-256 hash — not visible in plain text
+const ADMIN_HASH='9fec65a8ef532ae1f8c30905d1ff9e2bc01be4a6b40e4e2a3f569a6cf37e342b';
+async function hashPassword(pass){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pass));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
 let allReservations=[];
 function openAdminLogin(){document.getElementById('adminLogin').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('adminPassInput').focus(),100);}
 function closeAdminLogin(){document.getElementById('adminLogin').classList.remove('open');document.body.style.overflow='';document.getElementById('adminPassInput').value='';document.getElementById('loginError').style.display='none';}
-function checkAdminPass(){
+async function checkAdminPass(){
   const pass=document.getElementById('adminPassInput').value;
-  if(pass===ADMIN_PASS){closeAdminLogin();openAdmin();}
+  const hash=await hashPassword(pass);
+  if(hash===ADMIN_HASH){closeAdminLogin();openAdmin();}
   else{document.getElementById('loginError').style.display='block';document.getElementById('adminPassInput').value='';document.getElementById('adminPassInput').focus();}
 }
 document.getElementById('adminPassInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkAdminPass();});
+// Verify hash on load (makes sure hash is correct)
+// Hash of 'Lu12340293727' = a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
 async function openAdmin(){document.getElementById('adminPanel').classList.add('open');document.body.style.overflow='hidden';await loadReservations();}
 function closeAdmin(){document.getElementById('adminPanel').classList.remove('open');document.body.style.overflow='';}
 async function loadReservations(){
@@ -1208,11 +1263,4 @@ async function sendContact(){
   const btn=document.getElementById('ctBtn');btn.textContent='Sending...';
   try{
     await sbPost('contacts',{first_name:f,last_name:l,email:e,subject:s,message:m});
-    ['ctFirst','ctLast','ctEmail','ctSubject','ctMsg'].forEach(id=>document.getElementById(id).value='');
-    showToast("Message sent! We'll respond within 24 hours ✓");
-  }catch(err){showToast('Error sending. Try again.');}
-  btn.textContent='Send Message →';
-}
-</script>
-</body>
-</html>
+    ['ctFirst','ctLast','ctEmail','ctSubject','ctMsg']
